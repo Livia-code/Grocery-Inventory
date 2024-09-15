@@ -1,0 +1,178 @@
+{% extends 'Groceryapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  :root {
+    --dark-blue: rgb(14,14,53);
+    --palette-pink:rgb(250, 213,234);
+    --light-gray: #f5f5f5;
+  }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--light-gray);
+    color: #333;
+  }
+
+  .navbar {
+    background-color: rgb(14, 14, 53);
+    padding: 1rem;
+  }
+
+  .navbar-brand {
+    color: rgb(250, 213,234) !important;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .nav-link {
+    color: rgb(250, 213,234) !important;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: rgb(250, 213,234)!important;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h1 {
+    color: rgb(14, 14, 53);
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .btn-action {
+    background-color: rgb(14, 14, 53);
+    color: rgb(250, 213,234);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-action:hover {
+    background-color: rgb(14, 14, 53);
+    transform: translateY(-2px);
+  }
+
+  .table {
+    background-color: rgb(250, 213,234);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgb(0, 0, 0, 0.1);
+  }
+
+  .table thead {
+    background-color: rgb(14, 14, 53);
+    color: rgb(250, 213,234);
+  }
+
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+  }
+
+  .btn-sell {
+    background-color: rgb(14, 14, 53);
+    color: rgb(250, 213,234);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-sell:hover {
+    background-color: rgb(14, 14, 53);
+  }
+
+  .btn-delete {
+    background-color: #e74c3c;
+    color: rgb(250, 213,234);
+  }
+
+  .footer {
+    background-color: rgb(14, 14, 53);
+    color: rgb(250, 213,234) ;  
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 class="text-center mb-5">ITEMS IN STOCK</h1>
+
+  <div class="mb-4">
+    <form action="" method="POST" class="d-flex">
+      {{ product_filters.form }}
+      <input type="submit" value="Search Stocks" class="btn btn-action ml-2" />
+    </form>
+  </div>
+
+  <div class="action-buttons">
+    <a href="" class="btn btn-action">View Daily Sales</a>
+    <a href="" class="btn btn-action">Add Credit Sale</a>
+    <a href="" class="btn btn-action">Record Sales</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Branch Name</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Unit Price(UGX)</th>
+        <th scope="col">Details</th>
+        <th scope="col">Remove Item</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.stock_branch_name }}</td>
+        <td>{{ product.item_name }}</td>
+        <td>{{ product.stock_quantity }}</td>
+        <td>UGX{{ product.unit_price }}</td>
+        <td>
+          <a href="{% url 'product_detail' product.id %}">
+            <input type="submit" value="Sell Item" class="btn btn-sell" />
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'delete_detail' product.id %}">
+            <input type="submit" value="Delete Item" class="btn btn-delete" />
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  <p>&copy; 2024 Happy Hoe Grocery/Livia Karungi. All rights reserved.</p>
+</div>
+{% endblock %}

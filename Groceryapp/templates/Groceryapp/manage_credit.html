@@ -1,0 +1,31 @@
+{% extends 'Groceryapp/base.html' %}
+{% load crispy_forms_tags %}  {#Load crispy_forms_tags here#}
+{% load static %}
+<br><br>
+{% block content %}
+<style>
+  .container {
+    font-weight: bold;
+    margin-bottom: 5px;
+    background-color: rgb(250,213,234);
+  }
+  .btn-delete {
+        background-color: #e74c3c;
+        color: rgb(250, 213,234);
+      }
+</style>
+<br><br>
+<br><br>
+<div class="container">
+  <h1 class="text-center">{% if credit_sale %}Edit{% else %}Add{% endif %} Credit Sale</h1><br>
+  <div class="button">
+    <form method="POST" action="">
+         {% csrf_token %}
+          {{ form|crispy }}  {# Use crispy filter to render the form #}
+       <button type="submit" class="btn btn-primary">{% if credit_sale %}Save Changes{% else %}Add Credit Sale{% endif %}
+       </button>
+    </form>
+  </div>
+</div>
+<br><br>
+{% endblock %}
